@@ -2,9 +2,11 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TypeOrmModuleAsyncOptions, TypeOrmModuleOptions } from "@nestjs/typeorm";
 import { glob } from "glob";
 import { join } from "path";
+
 import {  playersEntity } from "src/entities/player.entity";
 import { TeamEntity } from "src/entities/team.entity";
 import { TeamLogoEntity } from "src/entities/teamLogo.entity";
+
 import { promisify } from "util";
 const globPromise = promisify(glob);
 
@@ -15,7 +17,7 @@ export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
     useFactory: async (config: ConfigService): Promise<TypeOrmModuleOptions> => {
         /* // Define the path pattern for entities
         const entitiesPath = join(__dirname, '../entities/*.entity.{ts,js}');
-        
+
         // Get all entity file paths
         const entityPaths: any = await globPromise(entitiesPath, { nodir: true });
         // Dynamically import entity modules
@@ -34,7 +36,10 @@ export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
             database: process.env.DB_NAME || config.get<string>('DB_NAME'),
             password: process.env.DB_PASSWORD || config.get<string>('DB_PASSWORD'),
             entities: [
+
                 playersEntity,TeamEntity,TeamLogoEntity
+
+     
             ],
             extra: {
                 charset: 'utf8mb4_unicode_ci',

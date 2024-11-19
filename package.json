@@ -36,6 +36,7 @@
     "swagger-ui": "^5.18.2",
     "typeorm": "^0.3.20",
     "xlsx": "^0.18.5"
+
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",

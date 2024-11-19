@@ -10,6 +10,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { TeamModule } from './modules/teams/teams.module';
 import { playersModule } from './modules/players/players.module';
 
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -24,6 +25,7 @@ import { playersModule } from './modules/players/players.module';
     EventEmitterModule.forRoot(),
     TeamModule,
     playersModule
+
 
   ],
   controllers: [AppController],
