@@ -9,14 +9,18 @@ import { teamDto } from './teams.dto';
 import { PaginationSortingDTO } from 'src/utils/pagination.dto';
 import { applyPagination, applySorting } from 'src/utils/common';
 import { TeamEntity } from 'src/entities/team.entity';
+<<<<<<< HEAD
 import { playersEntity } from 'src/entities/player.entity';
 import { LogoDto } from './logo.dto';
 import { TeamLogoEntity } from 'src/entities/teamLogo.entity';
+=======
+>>>>>>> 54cd900 (players import api creation)
 
 @Injectable()
 export class teamService {
   constructor(
     @InjectRepository(TeamEntity) private repository: Repository<TeamEntity>,
+<<<<<<< HEAD
     @InjectRepository(TeamLogoEntity) private logorepository: Repository<TeamLogoEntity>,
   
   ) {}
@@ -29,10 +33,24 @@ export class teamService {
     
     const response = await res.getMany();
     
+=======
+  
+  ) {}
+
+  async findAll(queryParams: PaginationSortingDTO) {
+    const pagination = applyPagination(queryParams.page);
+    const order = applySorting(queryParams.sortBy, queryParams.sortOrder, TeamEntity);
+
+    const res = await this.repository.find({
+      ...pagination,
+      order: order,
+    });
+>>>>>>> 54cd900 (players import api creation)
     return {
       statusCode: HttpStatus.OK,
       success: true,
       message: `team`,
+<<<<<<< HEAD
       data: response,
     } as IResponse;
   }catch(err:any){
@@ -44,6 +62,10 @@ export class teamService {
   };
   return response;
   }
+=======
+      data: res,
+    } as IResponse;
+>>>>>>> 54cd900 (players import api creation)
   }
 
   async update(id: number, userdocumentDTO: teamDto ,files:Express.Multer.File[]) {
@@ -84,6 +106,11 @@ export class teamService {
             data: updatedResponse
         };
     } catch (error: any) {
+<<<<<<< HEAD
+=======
+        
+        
+>>>>>>> 54cd900 (players import api creation)
         const response: IResponse = {
             statusCode: HttpStatus.BAD_REQUEST,
             success: false,
@@ -96,11 +123,15 @@ export class teamService {
 
 
   async findOne(id: number) {
+<<<<<<< HEAD
     const response: any = await this.repository
     .createQueryBuilder('team')
     .innerJoinAndMapMany('team.players',playersEntity, 'players', 'players.team_buy = team.id')
     .where('team.id = :id',{id:id})
     .getOne();
+=======
+    const response: TeamEntity = await this.repository.findOneBy({ id });
+>>>>>>> 54cd900 (players import api creation)
    
 
     return response
@@ -147,6 +178,7 @@ export class teamService {
         return response;
     }
 }
+<<<<<<< HEAD
   async save2(Dtos: LogoDto[] ,files:Express.Multer.File[]) {
     try {  
 
@@ -179,5 +211,7 @@ export class teamService {
         return response;
     }
 }
+=======
+>>>>>>> 54cd900 (players import api creation)
 
 }

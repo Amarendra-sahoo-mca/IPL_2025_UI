@@ -9,7 +9,10 @@ import { typeOrmAsyncConfig } from './config/typeorm.config';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { TeamModule } from './modules/teams/teams.module';
 import { playersModule } from './modules/players/players.module';
+<<<<<<< HEAD
 
+=======
+>>>>>>> 54cd900 (players import api creation)
 
 @Module({
   imports: [
@@ -25,7 +28,10 @@ import { playersModule } from './modules/players/players.module';
     EventEmitterModule.forRoot(),
     TeamModule,
     playersModule
+<<<<<<< HEAD
 
+=======
+>>>>>>> 54cd900 (players import api creation)
 
   ],
   controllers: [AppController],

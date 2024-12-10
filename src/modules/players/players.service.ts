@@ -1,7 +1,11 @@
 import { BadRequestException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DropdownType, IResponse } from 'src/interfaces/api.response';
+<<<<<<< HEAD
 import { FindOptionsWhere, Like, Repository } from 'typeorm';
+=======
+import { Repository } from 'typeorm';
+>>>>>>> 54cd900 (players import api creation)
 import Messages from 'src/constants/messages';
 
 import { playersDto } from './players.dto';
@@ -22,6 +26,7 @@ export class playersService {
   ) {}
 
   async findAll(queryParams: PaginationSortingDTO) {
+<<<<<<< HEAD
     try{
     const pagination = applyPagination(queryParams.page);
     const order = applySorting(queryParams.sortBy, queryParams.sortOrder, playersEntity);
@@ -41,10 +46,20 @@ export class playersService {
       });
     }
     const response = await res.getMany();
+=======
+    const pagination = applyPagination(queryParams.page);
+    const order = applySorting(queryParams.sortBy, queryParams.sortOrder, playersEntity);
+
+    const res = await this.repository.find({
+      ...pagination,
+      order: order,
+    });
+>>>>>>> 54cd900 (players import api creation)
     return {
       statusCode: HttpStatus.OK,
       success: true,
       message: `players`,
+<<<<<<< HEAD
       data: response,
     } as IResponse;
   }catch(err:any){
@@ -100,6 +115,10 @@ export class playersService {
     };
     return response;
   }
+=======
+      data: res,
+    } as IResponse;
+>>>>>>> 54cd900 (players import api creation)
   }
 
   async importFromExcel(file: Express.Multer.File): Promise<any> {
@@ -164,7 +183,10 @@ export class playersService {
           const restmoney = parseInt(team_data.money_have) - spendMoney;
           team_data.spend_money = spendMoney.toString();
           team_data.rest_money = restmoney.toString();
+<<<<<<< HEAD
           team_data.number_of_player = validDesignations.length;
+=======
+>>>>>>> 54cd900 (players import api creation)
           console.log('update data ----------------------\n', team_data);
 
           const save_responce = await this.teamRepository.update(team_data.id, team_data);

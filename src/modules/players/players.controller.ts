@@ -35,12 +35,15 @@ export class playersController{
          return this.terminalService.findAll(queryParams);
     }
 
+<<<<<<< HEAD
     @Get("byname/:name")
     @ApiOperation({ summary: "List playerss by name" })
     getAllbyname(@Param('name') name:string,@Query() queryParams: PaginationSortingDTO){
          return this.terminalService.findAllbyname(queryParams,name);
     }
 
+=======
+>>>>>>> 54cd900 (players import api creation)
    
 
     @Get(":id")

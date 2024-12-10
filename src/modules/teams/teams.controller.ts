@@ -13,8 +13,11 @@ import { TeamEntity } from "src/entities/team.entity";
 import { Repository } from "typeorm";
 import { join } from "path";
 import { Response } from 'express';
+<<<<<<< HEAD
 import { LogoDto } from "./logo.dto";
 import { TeamLogoEntity } from "src/entities/teamLogo.entity";
+=======
+>>>>>>> 54cd900 (players import api creation)
 
 
 @Controller("team")
@@ -24,13 +27,21 @@ export class teamController{
      constructor(
         private terminalService:teamService,
         @InjectRepository(TeamEntity) private repository: Repository<TeamEntity>,
+<<<<<<< HEAD
          @InjectRepository(TeamLogoEntity) private logorepository: Repository<TeamLogoEntity>,
+=======
+>>>>>>> 54cd900 (players import api creation)
      ){}
 
     @Get("all")
     @ApiOperation({ summary: "List All teams" })
+<<<<<<< HEAD
     getAll(){
          return this.terminalService.findAll();
+=======
+    getAll(@Query() queryParams: PaginationSortingDTO){
+         return this.terminalService.findAll(queryParams);
+>>>>>>> 54cd900 (players import api creation)
     }
 
    
@@ -84,6 +95,30 @@ export class teamController{
         return this.terminalService.save(documentDTO, files);
     }
 
+<<<<<<< HEAD
+=======
+    @Get('file/:docId')
+    async getFile(@Param('docId') docId: number, @Res() res: Response) {
+      const document = await this.repository.findOneBy({id: docId } );
+      
+      if (!document) {
+        throw new NotFoundException('Document not found');
+      }
+  
+      const fullPath = join(process.cwd(), document.logo);
+  
+      if (!fs.existsSync(fullPath)) {
+        throw new NotFoundException('File not found');
+      }
+  
+      // Stream file to response
+      res.set({
+        'Content-Type': 'application/octet-stream',
+        'Content-Disposition': `attachment; filename="${document.logo.split('\\').pop()}"`,
+      });
+      fs.createReadStream(fullPath).pipe(res);
+    }
+>>>>>>> 54cd900 (players import api creation)
 
     @Patch("update/:id")
     // @UseGuards(JwtAuthGuard)
@@ -137,6 +172,7 @@ export class teamController{
     
       return this.terminalService.update(parseInt(id), dtos, files);
     }
+<<<<<<< HEAD
 
     @Post("save_logo")
     @ApiOperation({ summary: 'Create teams' })
@@ -229,6 +265,8 @@ export class teamController{
     save3(@Body() DTO:LogoDto) {
         return 0;
     }
+=======
+>>>>>>> 54cd900 (players import api creation)
     
 } 
 
