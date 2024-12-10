@@ -7,6 +7,8 @@ import { join } from 'path';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmAsyncConfig } from './config/typeorm.config';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { TeamModule } from './modules/teams/teams.module';
+import { playersModule } from './modules/players/players.module';
 
 @Module({
   imports: [
@@ -19,7 +21,9 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
       serveRoot: "/uploads", // Default or fallback file
     }), 
     TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
-    EventEmitterModule.forRoot()
+    EventEmitterModule.forRoot(),
+    TeamModule,
+    playersModule
 
   ],
   controllers: [AppController],
