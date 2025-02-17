@@ -2,6 +2,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TypeOrmModuleAsyncOptions, TypeOrmModuleOptions } from "@nestjs/typeorm";
 import { glob } from "glob";
 import { join } from "path";
+import { MatchEntity } from "src/entities/match.entity";
 
 
 import {  playersEntity } from "src/entities/player.entity";
@@ -38,12 +39,7 @@ export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
             database: process.env.DB_NAME || config.get<string>('DB_NAME'),
             password: process.env.DB_PASSWORD || config.get<string>('DB_PASSWORD'),
             entities: [
-
-
-                playersEntity,TeamEntity,TeamLogoEntity
-
-     
-
+                playersEntity,TeamEntity,TeamLogoEntity,MatchEntity
             ],
             extra: {
                 charset: 'utf8mb4_unicode_ci',

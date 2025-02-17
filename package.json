@@ -36,10 +36,6 @@
     "swagger-ui": "^5.18.2",
     "typeorm": "^0.3.20",
     "xlsx": "^0.18.5"
-<<<<<<< HEAD
-
-=======
->>>>>>> 54cd900 (players import api creation)
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
