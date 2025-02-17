@@ -1,15 +1,7 @@
 import { BadRequestException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DropdownType, IResponse } from 'src/interfaces/api.response';
-<<<<<<< HEAD
-<<<<<<< HEAD
-import { FindOptionsWhere, Like, Repository } from 'typeorm';
-=======
-import { Repository } from 'typeorm';
->>>>>>> 54cd900 (players import api creation)
-=======
-import { FindOptionsWhere, Like, Repository } from 'typeorm';
->>>>>>> c2927f4 (Add team logo management and player search by name functionality)
+
 import Messages from 'src/constants/messages';
 
 import { playersDto } from './players.dto';
@@ -19,6 +11,7 @@ import { applyPagination, applySorting } from 'src/utils/common';
 import { playersEntity } from 'src/entities/player.entity';
 import { ExcelService } from 'src/utils/globalServices/excel.service';
 import { TeamEntity } from 'src/entities/team.entity';
+import { FindOptionsWhere, Like, Repository } from 'typeorm';
 
 
 @Injectable()
@@ -30,8 +23,7 @@ export class playersService {
   ) {}
 
   async findAll(queryParams: PaginationSortingDTO) {
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     try{
     const pagination = applyPagination(queryParams.page);
     const order = applySorting(queryParams.sortBy, queryParams.sortOrder, playersEntity);
@@ -50,43 +42,13 @@ export class playersService {
         res.addOrderBy(`user.${key}`, order[key]);
       });
     }
+   
     const response = await res.getMany();
-=======
-    const pagination = applyPagination(queryParams.page);
-    const order = applySorting(queryParams.sortBy, queryParams.sortOrder, playersEntity);
-
-    const res = await this.repository.find({
-      ...pagination,
-      order: order,
-    });
->>>>>>> 54cd900 (players import api creation)
-=======
-    try{
-    const pagination = applyPagination(queryParams.page);
-    const order = applySorting(queryParams.sortBy, queryParams.sortOrder, playersEntity);
-
-    const res = this.repository.createQueryBuilder('player')
-    .innerJoinAndMapOne('player.team',TeamEntity, 'team', 'player.team_buy = team.id');
-    
-    if (pagination.skip) {
-      res.skip(pagination.skip);
-    }
-    if (pagination.take) {
-      res.take(pagination.take);
-    }
-    if (order) {
-      Object.keys(order).forEach((key) => {
-        res.addOrderBy(`user.${key}`, order[key]);
-      });
-    }
-    const response = await res.getMany();
->>>>>>> c2927f4 (Add team logo management and player search by name functionality)
     return {
       statusCode: HttpStatus.OK,
       success: true,
       message: `players`,
-<<<<<<< HEAD
-<<<<<<< HEAD
+
       data: response,
     } as IResponse;
   }catch(err:any){
@@ -142,68 +104,11 @@ export class playersService {
     };
     return response;
   }
-=======
-      data: res,
-    } as IResponse;
->>>>>>> 54cd900 (players import api creation)
-=======
-      data: response,
-    } as IResponse;
-  }catch(err:any){
-    const response: IResponse = {
-      statusCode: HttpStatus.BAD_REQUEST,
-      success: false,
-      message: `no data found`,
-      data: err,
-    };
-    return response;
-  }
+
   }
 
 
-  async findAllbyname(queryParams: PaginationSortingDTO, name:string) {
-    const where: FindOptionsWhere<any> = {};
-    const pagination = applyPagination(queryParams.page);
-    const order = applySorting(queryParams.sortBy, queryParams.sortOrder, playersEntity);
 
-    if (name) {
-      where.name = Like(`%${name}%`);
-    }
-    try{
-     const res = this.repository.createQueryBuilder('player')
-    .innerJoinAndMapOne('player.team',TeamEntity, 'team', 'player.team_buy = team.id')  
-    .where(where);
-
-    if (pagination.skip) {
-      res.skip(pagination.skip);
-    }
-    if (pagination.take) {
-      res.take(pagination.take);
-    }
-    if (order) {
-      Object.keys(order).forEach((key) => {
-        res.addOrderBy(`user.${key}`, order[key]);
-      });
-    }
-    const response = await res.getMany();
-    
-    return {
-      statusCode: HttpStatus.OK,
-      success: true,
-      message: `players by name`,
-      data: response,
-    } as IResponse;
-  }catch(err:any){
-    const response: IResponse = {
-      statusCode: HttpStatus.BAD_REQUEST,
-      success: false,
-      message: `no data found`,
-      data: err,
-    };
-    return response;
-  }
->>>>>>> c2927f4 (Add team logo management and player search by name functionality)
-  }
 
   async importFromExcel(file: Express.Multer.File): Promise<any> {
     if (!file) {
@@ -267,14 +172,7 @@ export class playersService {
           const restmoney = parseInt(team_data.money_have) - spendMoney;
           team_data.spend_money = spendMoney.toString();
           team_data.rest_money = restmoney.toString();
-<<<<<<< HEAD
-<<<<<<< HEAD
-          team_data.number_of_player = validDesignations.length;
-=======
->>>>>>> 54cd900 (players import api creation)
-=======
-          team_data.number_of_player = validDesignations.length;
->>>>>>> c2927f4 (Add team logo management and player search by name functionality)
+
           console.log('update data ----------------------\n', team_data);
 
           const save_responce = await this.teamRepository.update(team_data.id, team_data);

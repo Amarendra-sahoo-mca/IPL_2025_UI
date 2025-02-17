@@ -35,21 +35,12 @@ export class playersController{
          return this.terminalService.findAll(queryParams);
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> c2927f4 (Add team logo management and player search by name functionality)
+
     @Get("byname/:name")
     @ApiOperation({ summary: "List playerss by name" })
     getAllbyname(@Param('name') name:string,@Query() queryParams: PaginationSortingDTO){
          return this.terminalService.findAllbyname(queryParams,name);
     }
-
-<<<<<<< HEAD
-=======
->>>>>>> 54cd900 (players import api creation)
-=======
->>>>>>> c2927f4 (Add team logo management and player search by name functionality)
    
 
     @Get(":id")

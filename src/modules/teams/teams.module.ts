@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { TeamEntity } from "src/entities/team.entity";
-import { teamController } from "./teams.controller";
-import { teamService } from "./teams.service";
+import {   TeamController } from "./teams.controller";
+import {   TeamService } from "./teams.service";
 import { TeamLogoEntity } from "src/entities/teamLogo.entity";
 
 @ Module({
@@ -10,10 +10,10 @@ import { TeamLogoEntity } from "src/entities/teamLogo.entity";
         TypeOrmModule.forFeature([TeamEntity,TeamLogoEntity])
     ],
     controllers: [
-        teamController
+          TeamController
     ],
     providers: [
-        teamService
+          TeamService
     ],
     exports: []
 })
