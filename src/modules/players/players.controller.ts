@@ -35,6 +35,12 @@ export class playersController{
          return this.terminalService.findAll(queryParams);
     }
 
+    @Get("byname/:name")
+    @ApiOperation({ summary: "List playerss by name" })
+    getAllbyname(@Param('name') name:string,@Query() queryParams: PaginationSortingDTO){
+         return this.terminalService.findAllbyname(queryParams,name);
+    }
+
    
 
     @Get(":id")

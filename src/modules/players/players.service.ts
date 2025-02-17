@@ -1,7 +1,7 @@
 import { BadRequestException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DropdownType, IResponse } from 'src/interfaces/api.response';
-import { Repository } from 'typeorm';
+import { FindOptionsWhere, Like, Repository } from 'typeorm';
 import Messages from 'src/constants/messages';
 
 import { playersDto } from './players.dto';
@@ -22,19 +22,84 @@ export class playersService {
   ) {}
 
   async findAll(queryParams: PaginationSortingDTO) {
+    try{
     const pagination = applyPagination(queryParams.page);
     const order = applySorting(queryParams.sortBy, queryParams.sortOrder, playersEntity);
 
-    const res = await this.repository.find({
-      ...pagination,
-      order: order,
-    });
+    const res = this.repository.createQueryBuilder('player')
+    .innerJoinAndMapOne('player.team',TeamEntity, 'team', 'player.team_buy = team.id');
+    
+    if (pagination.skip) {
+      res.skip(pagination.skip);
+    }
+    if (pagination.take) {
+      res.take(pagination.take);
+    }
+    if (order) {
+      Object.keys(order).forEach((key) => {
+        res.addOrderBy(`user.${key}`, order[key]);
+      });
+    }
+    const response = await res.getMany();
     return {
       statusCode: HttpStatus.OK,
       success: true,
       message: `players`,
-      data: res,
+      data: response,
     } as IResponse;
+  }catch(err:any){
+    const response: IResponse = {
+      statusCode: HttpStatus.BAD_REQUEST,
+      success: false,
+      message: `no data found`,
+      data: err,
+    };
+    return response;
+  }
+  }
+
+
+  async findAllbyname(queryParams: PaginationSortingDTO, name:string) {
+    const where: FindOptionsWhere<any> = {};
+    const pagination = applyPagination(queryParams.page);
+    const order = applySorting(queryParams.sortBy, queryParams.sortOrder, playersEntity);
+
+    if (name) {
+      where.name = Like(`%${name}%`);
+    }
+    try{
+     const res = this.repository.createQueryBuilder('player')
+    .innerJoinAndMapOne('player.team',TeamEntity, 'team', 'player.team_buy = team.id')  
+    .where(where);
+
+    if (pagination.skip) {
+      res.skip(pagination.skip);
+    }
+    if (pagination.take) {
+      res.take(pagination.take);
+    }
+    if (order) {
+      Object.keys(order).forEach((key) => {
+        res.addOrderBy(`user.${key}`, order[key]);
+      });
+    }
+    const response = await res.getMany();
+    
+    return {
+      statusCode: HttpStatus.OK,
+      success: true,
+      message: `players by name`,
+      data: response,
+    } as IResponse;
+  }catch(err:any){
+    const response: IResponse = {
+      statusCode: HttpStatus.BAD_REQUEST,
+      success: false,
+      message: `no data found`,
+      data: err,
+    };
+    return response;
+  }
   }
 
   async importFromExcel(file: Express.Multer.File): Promise<any> {
@@ -99,6 +164,7 @@ export class playersService {
           const restmoney = parseInt(team_data.money_have) - spendMoney;
           team_data.spend_money = spendMoney.toString();
           team_data.rest_money = restmoney.toString();
+          team_data.number_of_player = validDesignations.length;
           console.log('update data ----------------------\n', team_data);
 
           const save_responce = await this.teamRepository.update(team_data.id, team_data);
