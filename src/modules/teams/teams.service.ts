@@ -10,16 +10,23 @@ import { PaginationSortingDTO } from 'src/utils/pagination.dto';
 import { applyPagination, applySorting } from 'src/utils/common';
 import { TeamEntity } from 'src/entities/team.entity';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { playersEntity } from 'src/entities/player.entity';
 import { LogoDto } from './logo.dto';
 import { TeamLogoEntity } from 'src/entities/teamLogo.entity';
 =======
 >>>>>>> 54cd900 (players import api creation)
+=======
+import { playersEntity } from 'src/entities/player.entity';
+import { LogoDto } from './logo.dto';
+import { TeamLogoEntity } from 'src/entities/teamLogo.entity';
+>>>>>>> c2927f4 (Add team logo management and player search by name functionality)
 
 @Injectable()
 export class teamService {
   constructor(
     @InjectRepository(TeamEntity) private repository: Repository<TeamEntity>,
+<<<<<<< HEAD
 <<<<<<< HEAD
     @InjectRepository(TeamLogoEntity) private logorepository: Repository<TeamLogoEntity>,
   
@@ -34,22 +41,33 @@ export class teamService {
     const response = await res.getMany();
     
 =======
+=======
+    @InjectRepository(TeamLogoEntity) private logorepository: Repository<TeamLogoEntity>,
+>>>>>>> c2927f4 (Add team logo management and player search by name functionality)
   
   ) {}
 
-  async findAll(queryParams: PaginationSortingDTO) {
-    const pagination = applyPagination(queryParams.page);
-    const order = applySorting(queryParams.sortBy, queryParams.sortOrder, TeamEntity);
+  async findAll() {
+    try{
+    const res = this.repository.createQueryBuilder('team')
+    .innerJoinAndMapOne('team.logo',TeamLogoEntity, 'logo', 'logo.team_id = team.id');
 
+<<<<<<< HEAD
     const res = await this.repository.find({
       ...pagination,
       order: order,
     });
 >>>>>>> 54cd900 (players import api creation)
+=======
+    
+    const response = await res.getMany();
+    
+>>>>>>> c2927f4 (Add team logo management and player search by name functionality)
     return {
       statusCode: HttpStatus.OK,
       success: true,
       message: `team`,
+<<<<<<< HEAD
 <<<<<<< HEAD
       data: response,
     } as IResponse;
@@ -66,6 +84,19 @@ export class teamService {
       data: res,
     } as IResponse;
 >>>>>>> 54cd900 (players import api creation)
+=======
+      data: response,
+    } as IResponse;
+  }catch(err:any){
+    const response: IResponse = {
+      statusCode: HttpStatus.BAD_REQUEST,
+      success: false,
+      message: `Team ${Messages.UPDATE_FAILURE}`,
+      data: err,
+  };
+  return response;
+  }
+>>>>>>> c2927f4 (Add team logo management and player search by name functionality)
   }
 
   async update(id: number, userdocumentDTO: teamDto ,files:Express.Multer.File[]) {
@@ -107,10 +138,13 @@ export class teamService {
         };
     } catch (error: any) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         
         
 >>>>>>> 54cd900 (players import api creation)
+=======
+>>>>>>> c2927f4 (Add team logo management and player search by name functionality)
         const response: IResponse = {
             statusCode: HttpStatus.BAD_REQUEST,
             success: false,
@@ -124,14 +158,20 @@ export class teamService {
 
   async findOne(id: number) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> c2927f4 (Add team logo management and player search by name functionality)
     const response: any = await this.repository
     .createQueryBuilder('team')
     .innerJoinAndMapMany('team.players',playersEntity, 'players', 'players.team_buy = team.id')
     .where('team.id = :id',{id:id})
     .getOne();
+<<<<<<< HEAD
 =======
     const response: TeamEntity = await this.repository.findOneBy({ id });
 >>>>>>> 54cd900 (players import api creation)
+=======
+>>>>>>> c2927f4 (Add team logo management and player search by name functionality)
    
 
     return response
@@ -179,6 +219,9 @@ export class teamService {
     }
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> c2927f4 (Add team logo management and player search by name functionality)
   async save2(Dtos: LogoDto[] ,files:Express.Multer.File[]) {
     try {  
 
@@ -211,7 +254,10 @@ export class teamService {
         return response;
     }
 }
+<<<<<<< HEAD
 =======
 >>>>>>> 54cd900 (players import api creation)
+=======
+>>>>>>> c2927f4 (Add team logo management and player search by name functionality)
 
 }

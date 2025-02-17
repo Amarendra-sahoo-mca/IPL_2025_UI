@@ -14,10 +14,15 @@ import { Repository } from "typeorm";
 import { join } from "path";
 import { Response } from 'express';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { LogoDto } from "./logo.dto";
 import { TeamLogoEntity } from "src/entities/teamLogo.entity";
 =======
 >>>>>>> 54cd900 (players import api creation)
+=======
+import { LogoDto } from "./logo.dto";
+import { TeamLogoEntity } from "src/entities/teamLogo.entity";
+>>>>>>> c2927f4 (Add team logo management and player search by name functionality)
 
 
 @Controller("team")
@@ -28,13 +33,18 @@ export class teamController{
         private terminalService:teamService,
         @InjectRepository(TeamEntity) private repository: Repository<TeamEntity>,
 <<<<<<< HEAD
+<<<<<<< HEAD
          @InjectRepository(TeamLogoEntity) private logorepository: Repository<TeamLogoEntity>,
 =======
 >>>>>>> 54cd900 (players import api creation)
+=======
+         @InjectRepository(TeamLogoEntity) private logorepository: Repository<TeamLogoEntity>,
+>>>>>>> c2927f4 (Add team logo management and player search by name functionality)
      ){}
 
     @Get("all")
     @ApiOperation({ summary: "List All teams" })
+<<<<<<< HEAD
 <<<<<<< HEAD
     getAll(){
          return this.terminalService.findAll();
@@ -42,6 +52,10 @@ export class teamController{
     getAll(@Query() queryParams: PaginationSortingDTO){
          return this.terminalService.findAll(queryParams);
 >>>>>>> 54cd900 (players import api creation)
+=======
+    getAll(){
+         return this.terminalService.findAll();
+>>>>>>> c2927f4 (Add team logo management and player search by name functionality)
     }
 
    
@@ -96,6 +110,7 @@ export class teamController{
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     @Get('file/:docId')
     async getFile(@Param('docId') docId: number, @Res() res: Response) {
@@ -119,6 +134,8 @@ export class teamController{
       fs.createReadStream(fullPath).pipe(res);
     }
 >>>>>>> 54cd900 (players import api creation)
+=======
+>>>>>>> c2927f4 (Add team logo management and player search by name functionality)
 
     @Patch("update/:id")
     // @UseGuards(JwtAuthGuard)
@@ -173,6 +190,9 @@ export class teamController{
       return this.terminalService.update(parseInt(id), dtos, files);
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> c2927f4 (Add team logo management and player search by name functionality)
 
     @Post("save_logo")
     @ApiOperation({ summary: 'Create teams' })
@@ -265,8 +285,11 @@ export class teamController{
     save3(@Body() DTO:LogoDto) {
         return 0;
     }
+<<<<<<< HEAD
 =======
 >>>>>>> 54cd900 (players import api creation)
+=======
+>>>>>>> c2927f4 (Add team logo management and player search by name functionality)
     
 } 
 
