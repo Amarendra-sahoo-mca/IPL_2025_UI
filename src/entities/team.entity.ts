@@ -49,6 +49,9 @@ export class TeamEntity{
 
     @Column({nullable : true})
     logo: string;
+
+    @Column({nullable : true})
+    banner: string;
     
     @CreateDateColumn()
     created_on: Date;

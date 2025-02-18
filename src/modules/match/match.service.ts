@@ -28,6 +28,49 @@ export class MatchService {
     private readonly excelService: ExcelService,
   ) {}
 
+ async findAll(queryParams: PaginationSortingDTO) {
+
+    try{
+    const pagination = applyPagination(queryParams.page);
+    const order = applySorting(queryParams.sortBy, queryParams.sortOrder, MatchEntity);
+
+    const res = this.repository.createQueryBuilder('matches')
+    .innerJoinAndMapOne('matches.hometeam_data',TeamEntity, 'team', 'matches.homeTeam = team.id')
+    .innerJoinAndMapOne('matches.awayteam_data',TeamEntity, 'team2', 'matches.awayTeam = team2.id');
+    
+    if (pagination.skip) {
+      res.skip(pagination.skip);
+    }
+    if (pagination.take) {
+      res.take(pagination.take);
+    }
+    if (order) {
+      Object.keys(order).forEach((key) => {
+        res.addOrderBy(`user.${key}`, order[key]);
+      });
+    }
+   
+    const response = await res.getMany();
+    return {
+      statusCode: HttpStatus.OK,
+      success: true,
+      message: `players`,
+
+      data: response,
+    } as IResponse;
+  }catch(err:any){
+    const response: IResponse = {
+      statusCode: HttpStatus.BAD_REQUEST,
+      success: false,
+      message: `no data found`,
+      data: err,
+    };
+    return response;
+  }
+  }
+
+
+
   async setAll() {
     try {
       await this.repository.clear();

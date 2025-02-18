@@ -32,7 +32,7 @@ export class MatchController{
     @Get("getall")
     @ApiOperation({ summary: "List All Matchs" })
     getAll(@Query() queryParams: PaginationSortingDTO){
-        //  return this.terminalService.findAll(queryParams);
+          return this.terminalService.findAll(queryParams);
     }
 
     @Get("saveall")

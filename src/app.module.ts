@@ -23,7 +23,7 @@ import { MatchModule } from './modules/match/match.module';
     }), 
     TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
     EventEmitterModule.forRoot(),
-    // TeamModule,
+    TeamModule,
     playersModule,
     MatchModule
 

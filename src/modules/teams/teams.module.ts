@@ -4,6 +4,7 @@ import { TeamEntity } from "src/entities/team.entity";
 import {   TeamController } from "./teams.controller";
 import {   TeamService } from "./teams.service";
 import { TeamLogoEntity } from "src/entities/teamLogo.entity";
+import { ExcelService } from "src/utils/globalServices/excel.service";
 
 @ Module({
     imports: [
@@ -13,7 +14,7 @@ import { TeamLogoEntity } from "src/entities/teamLogo.entity";
           TeamController
     ],
     providers: [
-          TeamService
+          TeamService,ExcelService
     ],
     exports: []
 })
